@@ -1,0 +1,20 @@
+const UserController = require("../controllers/user.controller");
+const PetController = require("../controllers/pet.controller");
+const { authenticate } = require("../config/jwt.config");
+module.exports = (app) => {
+  app.get("/api", UserController.index);
+  app.post("/api/create", UserController.createUser);
+  app.post("/api/login", UserController.login);
+  app.post("/api/user/userlogin", authenticate, UserController.getLoggedInUser);
+  app.post("/api/createPet", PetController.createPet);
+  app.get("/api/allusers", authenticate, UserController.allusers);
+  app.get("/api/allPets", PetController.allPets);
+  app.get("/api/singleuser/:_id", UserController.singleuser);
+  app.get("/api/onePet/:_id", PetController.onePet);
+  app.put("/api/allusers/update/:_id", UserController.UpdateUser);
+  app.put("/api/allPets/update/:_id", PetController.UpdatePet);
+  app.put("/api/single/add_team/:_id", UserController.addTeam);
+  //app.put("/api/allPets/add_Pet/:_id", UserController.addPet);
+  app.delete("/api/allusers/delete/:_id", UserController.DeleteUser);
+  app.delete("/api/allPets/delete/:_id", PetController.DeletePet);
+};
